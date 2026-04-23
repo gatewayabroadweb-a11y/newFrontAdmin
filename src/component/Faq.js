@@ -11,6 +11,8 @@ function Faq() {
   const [activeIndex, setActiveIndex] = useState(null);
   const [form, setform] = useState([]);
   const [form2, setform2] = useState([]);
+    const [faqCategory, setfaqCategory] = useState([])
+  
 
   const [selectedCategory, setSelectedCategory] = useState('All');
 
@@ -18,7 +20,7 @@ function Faq() {
     setActiveIndex((prevIndex) => (prevIndex === index ? null : index));
   };
 
-  console.log(data)
+  
   useEffect(() => {
     if (data?.data?.faq) {
       setform(data.data.faq || []);
@@ -34,7 +36,7 @@ function Faq() {
   };
 
   const filterData=(category,obj)=>{
-    console.log("some",form)
+    
     const filteredBlogCatogoryData = obj.filter(blog => {
       if (category === 'All') {
         return true; // Show all blogs if 'All' category is selected
@@ -68,6 +70,27 @@ function Faq() {
     }
   }; 
 
+   const rescategory = async () => {
+    try {
+      const res = await PageServices.getAllCategoryfaq();
+
+
+
+      const cos = setfaqCategory(res.data.category)
+
+
+
+    } catch (error) {
+      console.log(error);
+      alert("Something went wrong");
+    }
+  };
+
+  useEffect(() => {
+    rescategory()
+  }, [])
+
+
   return (
    
     <div className="content-wrapper">
@@ -94,40 +117,19 @@ function Faq() {
 
   
     <section className="content">
-    <div className='d-flex justify-content-between w-50 mb-4'>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'All')}}>
-                  <i className="fa fa-Page" />
-                  ALL
-                </Link>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'GMAT')}}>
-                  <i className="fa fa-Page" />
-                  GMAT
-                </Link>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'IELTS')}}>
-                  <i className="fa fa-Page" />
-                  IELTS
-                </Link>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'TOEFL')}}>
-                  <i className="fa fa-Page" />
-                  TOEFL
-                </Link>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'GRE')}}>
-                  <i className="fa fa-Page" />
-                  GRE
-                </Link>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'PTE')}}>
-                  <i className="fa fa-Page" />
-                  PTE
-                </Link>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'SAT')}}>
-                  <i className="fa fa-Page" />
-                  SAT
-                </Link>
-                <Link to="" className="btn btn-sm btn-primary" onClick={(e)=>{handleCategoryChange(e,'spokenEnglish')}}>
-                  <i className="fa fa-Page" />
-                  Spoken English
-                </Link>
-                </div>
+    <div className="d-flex  w-50 mb-4 flex-wrap gap-2">
+  {faqCategory.map((cat, index) => (
+    <Link
+      key={index}
+      to=""
+      className="btn btn-sm btn-primary"
+      onClick={(e) => handleCategoryChange(e, cat)}
+    >
+      <i className="fa fa-file-text-o me-1" />
+      {cat}
+    </Link>
+  ))}
+</div>
         {form.map((faq,index)=>(
     <div className={activeIndex == index?'card':'card collapsed-card'}>
         <div className="card-header" onClick={() => toggleAccordion(index)}>
