@@ -218,7 +218,8 @@ function AddBlog() {
                   <div className="form-group">
                     <label>Description</label>
                     <Editor
-                      apiKey={'cvv7pvo9jpr74j9bcg5j7mt8d0esguhdhw4dc5uoxky2pxdn'}
+                      // apiKey={'cvv7pvo9jpr74j9bcg5j7mt8d0esguhdhw4dc5uoxky2pxdn'}
+                      apiKey={'l4qgr6sy1p9dh0avnwki17s0jwa8a3t76imusey6nab2t0jn'}
                       value={watch('blogDescription') || ''}
                       onEditorChange={(content) => setValue('blogDescription', content, { shouldDirty: true })}
                       init={editorConfig}
